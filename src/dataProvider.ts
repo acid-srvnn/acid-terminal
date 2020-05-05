@@ -1,8 +1,22 @@
 export class DataProvider{
 	refreshConfig() {
 		
-	}
+    }
     getConfigJson() {
+        let json = this.getConfig();
+        var terminalGroups = json.terminalGroups;
+            terminalGroups.forEach(function (terminalGroup) {
+                terminalGroup.terminals.forEach(function (terminal) {
+                    terminal.cmds.forEach(function (cmd) {
+                        
+                    });
+                    terminal.path = terminal.path ? terminal.path : ".";
+                    terminal.cmd = terminal.cmd ? terminal.cmd : "";
+                })
+            });
+        return json;
+    }
+    getConfig(){
         return {
             setTerminalsAtStart: true,
             terminalGroups: [
@@ -20,7 +34,9 @@ export class DataProvider{
                                     name: "setup",
                                     cmd : "ant -f .\\build\\build-local.xml setup"
                                 }
-                            ]
+                            ],
+                            path: ".",
+                            cmd: "ipconfig"
                         },
                         {
                             name: "product",

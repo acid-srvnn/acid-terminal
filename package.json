@@ -34,6 +34,14 @@
 			{
 				"command": "acid-terminal.list.show",
 				"title": "Show"
+			},
+			{
+				"command": "acid-terminal.list.delete",
+				"title": "Delete"
+			},
+			{
+				"command": "acid-terminal.list.setup",
+				"title": "Setup"
 			}
 		],
 		"viewsContainers": {
@@ -66,6 +74,16 @@
 				},
 				{
 					"command": "acid-terminal.refreshConf",
+					"when": "view == acid-terminal-list-view",
+					"group": "navigation"
+				},
+				{
+					"command": "acid-terminal.list.delete",
+					"when": "view == acid-terminal-list-view",
+					"group": "navigation"
+				},
+				{
+					"command": "acid-terminal.list.setup",
 					"when": "view == acid-terminal-list-view",
 					"group": "navigation"
 				}

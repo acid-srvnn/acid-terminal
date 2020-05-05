@@ -24,9 +24,9 @@ export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.
                 terminalGroup.terminals.forEach(function (terminal) {
                     let cmds: Cmd[] = [];
                     terminal.cmds.forEach(function (cmd) {
-                        cmds.push(new Cmd(cmd.name, cmd.cmd));
+                        cmds.push(new Cmd(cmd.name, cmd.cmd, terminal.name));
                     })
-                    terminals.push(new Terminal(terminal.name, cmds));        
+                    terminals.push(new Terminal(terminal.name, cmds, terminal.path?terminal.path:".", terminal.cmd?terminal.cmd:""));        
                 })
                 ret.push(new TerminalGroup(terminalGroup.name,terminals));
             });
@@ -57,9 +57,11 @@ export class Terminal extends vscode.TreeItem{
 
     constructor(
         public readonly label: string,
-        public readonly cmds: Cmd[]
-	) {
-		super(label, vscode.TreeItemCollapsibleState.Collapsed);
+        public readonly cmds: Cmd[],
+        public readonly path: string,
+        public readonly cmd: string
+    ) {        
+        super(label, vscode.TreeItemCollapsibleState.Collapsed);        
     }
 
 	contextValue = 'Terminal';
@@ -69,7 +71,8 @@ export class Cmd extends vscode.TreeItem{
 
     constructor(
         public readonly label: string,
-        public readonly cmd: string
+        public readonly cmd: string,
+        public readonly terminalName: string
 	) {
 		super(label, vscode.TreeItemCollapsibleState.None);
     }  
