@@ -10,7 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:acid-terminal.helloWorld"
+		"onView:acid-terminal-list-view"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -18,8 +18,76 @@
 			{
 				"command": "acid-terminal.helloWorld",
 				"title": "Hello World"
+			},
+			{
+				"command": "acid-terminal.refreshConf",
+				"title": "Refresh"
+			},
+			{
+				"command": "acid-terminal.cmd.run",
+				"title": "Run"
+			},
+			{
+				"command": "acid-terminal.list.run",
+				"title": "Run"
+			},
+			{
+				"command": "acid-terminal.list.show",
+				"title": "Show"
 			}
-		]
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "acid-terminal-container",
+					"title": "acid-terminal",
+					"icon": "media/terminal-icon.svg"
+				}
+			]
+		},
+		"views": {
+			"acid-terminal-container": [
+			  {
+				"id": "acid-terminal-list-view",
+				"name": "Terminals"
+			  },
+			  {
+				"id": "acid-terminal-cmd-view",
+				"name": "Quick Commands"
+			  }
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "acid-terminal.refreshConf",
+					"when": "view == acid-terminal-cmd-view",
+					"group": "navigation"
+				},
+				{
+					"command": "acid-terminal.refreshConf",
+					"when": "view == acid-terminal-list-view",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "acid-terminal.cmd.run",
+					"when": "view == acid-terminal-cmd-view && viewItem == Cmd",
+					"group": "inline"
+				},
+				{
+					"command": "acid-terminal.list.run",
+					"when": "view == acid-terminal-list-view && viewItem == Cmd",
+					"group": "inline"
+				},
+				{
+					"command": "acid-terminal.list.show",
+					"when": "view == acid-terminal-list-view && viewItem != Cmd",
+					"group": "inline"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
