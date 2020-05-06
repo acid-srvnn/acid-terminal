@@ -4,6 +4,14 @@
 	"description": "",
 	"version": "0.1.0",
 	"publisher": "acid-srvnn",
+	"author": {
+		"name": "acid-srvnn",
+		"email": "safa.acid@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/acid-srvnn/acid-terminal"
+	},
 	"engines": {
 		"vscode": "^1.44.0"
 	},
@@ -22,7 +30,11 @@
 			},
 			{
 				"command": "acid-terminal.refreshConf",
-				"title": "Refresh"
+				"title": "Refresh Config",
+				"icon": {
+					"light": "resources/icons/light/refresh.svg",
+					"dark": "resources/icons/dark/refresh.svg"
+				}
 			},
 			{
 				"command": "acid-terminal.cmd.run",
@@ -38,11 +50,19 @@
 			},
 			{
 				"command": "acid-terminal.list.delete",
-				"title": "Delete"
+				"title": "Remove open terminals",
+				"icon": {
+					"light": "resources/icons/light/trash.svg",
+					"dark": "resources/icons/dark/trash.svg"
+				}
 			},
 			{
 				"command": "acid-terminal.list.setup",
-				"title": "Setup"
+				"title": "Setup terminals",
+				"icon": {
+					"light": "resources/icons/light/run.svg",
+					"dark": "resources/icons/dark/run.svg"
+				}
 			}
 		],
 		"viewsContainers": {
@@ -50,20 +70,20 @@
 				{
 					"id": "acid-terminal-container",
 					"title": "acid-terminal",
-					"icon": "media/terminal-icon.svg"
+					"icon": "resources/icons/light/sidebar.svg"
 				}
 			]
 		},
 		"views": {
 			"acid-terminal-container": [
-			  {
-				"id": "acid-terminal-list-view",
-				"name": "Terminals"
-			  },
-			  {
-				"id": "acid-terminal-cmd-view",
-				"name": "Quick Commands"
-			  }
+				{
+					"id": "acid-terminal-list-view",
+					"name": "Terminals"
+				},
+				{
+					"id": "acid-terminal-cmd-view",
+					"name": "Quick Commands"
+				}
 			]
 		},
 		"menus": {
@@ -71,7 +91,7 @@
 				{
 					"command": "acid-terminal.refreshConf",
 					"when": "view == acid-terminal-cmd-view",
-					"group": "navigation"
+					"group": "navigation"					
 				},
 				{
 					"command": "acid-terminal.refreshConf",
@@ -107,21 +127,24 @@
 				}
 			]
 		},
-		"configuration" : {
+		"configuration": {
 			"title": "acid-terminal",
 			"properties": {
-				"acid-terminal.conf.type" : {
-					"type" : "string",
-					"default" : "json",
-					"enum" : ["json","file"],
+				"acid-terminal.conf.type": {
+					"type": "string",
+					"default": "json",
+					"enum": [
+						"json",
+						"file"
+					],
 					"description": "Load config from"
 				},
-				"acid-terminal.conf.json" : {
-					"type" : "",
+				"acid-terminal.conf.json": {
+					"type": "",
 					"description": "Provide config json"
 				},
-				"acid-terminal.conf.file" : {
-					"type" : "string",
+				"acid-terminal.conf.file": {
+					"type": "string",
 					"description": "Provide config file"
 				}
 			}
