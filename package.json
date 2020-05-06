@@ -12,6 +12,8 @@
 		"type": "git",
 		"url": "https://github.com/acid-srvnn/acid-terminal"
 	},
+	"icon": "resources/icons/light/icon.png",
+	"preview": true,
 	"engines": {
 		"vscode": "^1.44.0"
 	},
