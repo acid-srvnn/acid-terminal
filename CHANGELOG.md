@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.1.3
+
+* Description change
+
 ### 0.1.2
 
 * Fix issue - startup terminals didnt work sometimes

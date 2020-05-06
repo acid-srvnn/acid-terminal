@@ -1,7 +1,7 @@
 {
 	"name": "acid-terminal",
 	"displayName": "acid-terminal",
-	"description": "",
+	"description": "Preconfigure terminals, terminal groups, commands and use them with ease",
 	"version": "0.1.2",
 	"publisher": "acid-srvnn",
 	"author": {
