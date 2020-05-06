@@ -20,12 +20,13 @@ export class DataProvider {
     }
 
     refreshConfig() {
+        let conf = vscode.workspace.getConfiguration("acid-terminal")
         let tempjson: Object | undefined;
         let tempconfig: ConfTemplate;
-        let confType = vscode.workspace.getConfiguration().get("acid-terminal.conf.type");
+        let confType = conf.conf.type;
 
         if (confType == 'file') {
-            let setting_conf_file: string | undefined = vscode.workspace.getConfiguration().get("acid-terminal.conf.file");
+            let setting_conf_file: string | undefined = conf.conf.file;
 
             if (setting_conf_file == undefined || setting_conf_file == "") {
                 tempjson = this.getDefaultConfig();
@@ -42,13 +43,13 @@ export class DataProvider {
                 }
             } 
         } else if (confType == 'json'){
-            tempjson = vscode.workspace.getConfiguration().get("acid-terminal.conf.json");
-            if (tempjson == undefined) {
+            tempjson = conf.conf.json;
+            if (conf.conf.json.setTerminalsAtStart == undefined) {
                 tempjson = this.getDefaultConfig();
             }
         } else {
-            tempjson = vscode.workspace.getConfiguration().get("acid-terminal.conf.json");
-            if (tempjson == undefined) {
+            tempjson = conf.conf.json;
+            if (conf.conf.json.setTerminalsAtStart == undefined) {
                 tempjson = this.getDefaultConfig();
             }
         }

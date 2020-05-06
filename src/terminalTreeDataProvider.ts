@@ -19,7 +19,7 @@ export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.
     }
     getChildren(element?: any): vscode.ProviderResult<any[]> {
         if (!element) {
-            var terminalGroups = this.dataProvider.getConfig().terminalGroups;
+            let terminalGroups = this.dataProvider.getConfig().terminalGroups;
             let ret:TerminalGroup[] = [];
             terminalGroups.forEach(function (terminalGroup) {
                 let terminals: Terminal[] = [];

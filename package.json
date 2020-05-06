@@ -91,7 +91,7 @@
 				{
 					"command": "acid-terminal.refreshConf",
 					"when": "view == acid-terminal-cmd-view",
-					"group": "navigation"					
+					"group": "navigation"
 				},
 				{
 					"command": "acid-terminal.refreshConf",
@@ -140,8 +140,80 @@
 					"description": "Load config from"
 				},
 				"acid-terminal.conf.json": {
-					"type": "",
-					"description": "Provide config json"
+					"type": "object",
+					"description": "Provide config json",
+					"properties": {
+						"setTerminalsAtStart": {
+							"type": "boolean"
+						},
+						"terminalGroups": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"terminals": {
+										"type": "array",
+										"items": {
+											"type":"object",
+											"properties": {
+												"name": {
+													"type": "string"
+												},
+												"path": {
+													"type": "string"
+												},
+												"cmd": {
+													"type": "string"
+												},
+												"cmds": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"name": {
+																"type": "string"
+															},
+															"cmd": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						},
+						"cmdGroups": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"cmds": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"name": {
+													"type": "string"
+												},
+												"cmd": {
+													"type": "string"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				},
 				"acid-terminal.conf.file": {
 					"type": "string",
