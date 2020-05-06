@@ -2,7 +2,8 @@
 	"name": "acid-terminal",
 	"displayName": "acid-terminal",
 	"description": "",
-	"version": "0.0.1",
+	"version": "0.1.0",
+	"publisher": "acid-srvnn",
 	"engines": {
 		"vscode": "^1.44.0"
 	},
@@ -10,7 +11,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onView:acid-terminal-list-view"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -105,6 +106,25 @@
 					"group": "inline"
 				}
 			]
+		},
+		"configuration" : {
+			"title": "acid-terminal",
+			"properties": {
+				"acid-terminal.conf.type" : {
+					"type" : "string",
+					"default" : "json",
+					"enum" : ["json","file"],
+					"description": "Load config from"
+				},
+				"acid-terminal.conf.json" : {
+					"type" : "",
+					"description": "Provide config json"
+				},
+				"acid-terminal.conf.file" : {
+					"type" : "string",
+					"description": "Provide config file"
+				}
+			}
 		}
 	},
 	"scripts": {

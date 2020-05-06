@@ -11,13 +11,15 @@ export class CmdTreeDataProvider implements vscode.TreeDataProvider<vscode.TreeI
         this.dataProvider = param;
     }
 
-    onDidChangeTreeData?: vscode.Event<any> | undefined;
+    public _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined> = new vscode.EventEmitter<vscode.TreeItem | undefined>();
+    readonly onDidChangeTreeData: vscode.Event<vscode.TreeItem | undefined> = this._onDidChangeTreeData.event;
+
     getTreeItem(element: any): vscode.TreeItem | Thenable<vscode.TreeItem> {
         return element;
     }
     getChildren(element?: any): vscode.ProviderResult<any[]> {
         if (!element) {
-            var cmdGroups = this.dataProvider.getConfigJson().cmdGroups;
+            var cmdGroups = this.dataProvider.getConfig().cmdGroups;
             let ret:CmdGroup[] = [];
             cmdGroups.forEach(function (cmdGroup) {
                 let cmds: Cmd[] = [];

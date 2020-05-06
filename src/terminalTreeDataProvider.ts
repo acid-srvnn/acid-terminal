@@ -11,13 +11,15 @@ export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.
         this.dataProvider = param;
     }
 
-    onDidChangeTreeData?: vscode.Event<any> | undefined;
+    public _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined> = new vscode.EventEmitter<vscode.TreeItem | undefined>();
+    readonly onDidChangeTreeData: vscode.Event<vscode.TreeItem | undefined> = this._onDidChangeTreeData.event;
+
     getTreeItem(element: any): vscode.TreeItem | Thenable<vscode.TreeItem> {
         return element;
     }
     getChildren(element?: any): vscode.ProviderResult<any[]> {
         if (!element) {
-            var terminalGroups = this.dataProvider.getConfigJson().terminalGroups;
+            var terminalGroups = this.dataProvider.getConfig().terminalGroups;
             let ret:TerminalGroup[] = [];
             terminalGroups.forEach(function (terminalGroup) {
                 let terminals: Terminal[] = [];
