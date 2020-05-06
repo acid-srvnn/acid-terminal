@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 import { DataProvider } from './dataProvider';
 import { CmdTreeDataProvider } from './cmdTreeDataProvider';
 import { TerminalTreeDataProvider, Terminal } from './terminalTreeDataProvider';
-import { resolve } from 'dns';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -86,7 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 async function createTerminalSync(terminal: any, command: string) {
 	return new Promise(async resolve => {
-		await vscode.commands.executeCommand(command);
+		vscode.commands.executeCommand(command);
 		let listener = vscode.window.onDidOpenTerminal(async e => {
 			listener.dispose();
 			await vscode.commands.executeCommand('workbench.action.terminal.renameWithArg', { name: terminal.name });

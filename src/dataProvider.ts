@@ -9,9 +9,7 @@ export class DataProvider {
         this.config = new ConfTemplate(undefined);
         this.refreshConfig();
         if (this.config.setTerminalsAtStart) {
-            setTimeout(() => {
-                vscode.commands.executeCommand("acid-terminal.list.setup");
-            }, 1000);
+            vscode.commands.executeCommand("acid-terminal.list.setup");
         }
     }   
 
