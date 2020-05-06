@@ -85,7 +85,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 async function createTerminalSync(terminal: any, command: string) {
-	console.log(terminal.name);
 	return new Promise(async resolve => {
 		await vscode.commands.executeCommand(command);
 		let listener = vscode.window.onDidOpenTerminal(async e => {
