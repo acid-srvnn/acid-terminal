@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable4 = vscode.commands.registerCommand('acid-terminal.list.delete', (args) => {
 		vscode.window.terminals.forEach(async (terminal) => {
 			terminal.dispose();
-		})
+		});
 	});
 	context.subscriptions.push(disposable4);
 
@@ -57,11 +57,11 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable6 = vscode.commands.registerCommand('acid-terminal.list.show', (args) => {
 		let status: boolean = false;
 		vscode.window.terminals.forEach(async (terminal) => {
-			if (terminal.name == args.label) {
+			if (terminal.name === args.label) {
 				terminal.show();
 				status = true;
 			}
-		})
+		});
 		if (!status) {
 			vscode.window.showInformationMessage('acid-terminal - setup first');
 		}
@@ -71,12 +71,12 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable7 = vscode.commands.registerCommand('acid-terminal.list.run', (args) => {
 		let status: boolean = false;
 		vscode.window.terminals.forEach(async (terminal) => {
-			if (terminal.name == args.terminalName) {
+			if (terminal.name === args.terminalName) {
 				terminal.show();
 				terminal.sendText(args.cmd, true);
 				status = true;
 			}
-		})
+		});
 		if (!status) {
 			vscode.window.showInformationMessage('acid-terminal - setup first');
 		}
@@ -89,7 +89,7 @@ async function createTerminalSync(terminal: any, command: string) {
 		await vscode.commands.executeCommand(command);
 		let listener = vscode.window.onDidOpenTerminal(async e => {
 			listener.dispose();
-			await vscode.commands.executeCommand('workbench.action.terminal.renameWithArg', { name: terminal.name })
+			await vscode.commands.executeCommand('workbench.action.terminal.renameWithArg', { name: terminal.name });
 			e.sendText(`cd ${terminal.path}`, true);
 			e.sendText(terminal.cmd, true);
 			resolve();

@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs'
+import * as fs from 'fs';
 
 export class DataProvider {
 
@@ -20,15 +20,15 @@ export class DataProvider {
     }
 
     refreshConfig() {
-        let conf = vscode.workspace.getConfiguration("acid-terminal")
+        let conf = vscode.workspace.getConfiguration("acid-terminal");
         let tempjson: Object | undefined;
         let tempconfig: ConfTemplate;
         let confType = conf.conf.type;
 
-        if (confType == 'file') {
+        if (confType === 'file') {
             let setting_conf_file: string | undefined = conf.conf.file;
 
-            if (setting_conf_file == undefined || setting_conf_file == "") {
+            if (setting_conf_file === undefined || setting_conf_file === "") {
                 tempjson = this.getDefaultConfig();
             } else {
                 if (!fs.existsSync(setting_conf_file)) {
@@ -42,14 +42,14 @@ export class DataProvider {
                     tempjson = JSON.parse(cnf);
                 }
             } 
-        } else if (confType == 'json'){
+        } else if (confType === 'json'){
             tempjson = conf.conf.json;
-            if (conf.conf.json.setTerminalsAtStart == undefined) {
+            if (conf.conf.json.setTerminalsAtStart === undefined) {
                 tempjson = this.getDefaultConfig();
             }
         } else {
             tempjson = conf.conf.json;
-            if (conf.conf.json.setTerminalsAtStart == undefined) {
+            if (conf.conf.json.setTerminalsAtStart === undefined) {
                 tempjson = this.getDefaultConfig();
             }
         }
@@ -67,7 +67,7 @@ export class DataProvider {
                 });
                 terminal.path = terminal.path ? terminal.path : ".";
                 terminal.cmd = terminal.cmd ? terminal.cmd : "";
-            })
+            });
         });
         return json;
     }
@@ -166,7 +166,7 @@ export class DataProvider {
                     ]
                 }
             ]
-        }
+        };
     }
 }
 

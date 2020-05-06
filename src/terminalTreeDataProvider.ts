@@ -27,16 +27,16 @@ export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.
                     let cmds: Cmd[] = [];
                     terminal.cmds.forEach(function (cmd) {
                         cmds.push(new Cmd(cmd.name, cmd.cmd, terminal.name));
-                    })
-                    terminals.push(new Terminal(terminal.name, cmds, terminal.path?terminal.path:".", terminal.cmd?terminal.cmd:""));        
-                })
+                    });
+                    terminals.push(new Terminal(terminal.name, cmds, terminal.path ? terminal.path : ".", terminal.cmd ? terminal.cmd : ""));
+                });
                 ret.push(new TerminalGroup(terminalGroup.name,terminals));
             });
             return Promise.resolve(ret);
         } else {
-            if (element.contextValue == "TerminalGroup") {
+            if (element.contextValue === "TerminalGroup") {
                 return Promise.resolve(element.terminals);
-            } else if (element.contextValue == "Terminal") {
+            } else if (element.contextValue === "Terminal") {
                 return Promise.resolve(element.cmds);
             }
         }
