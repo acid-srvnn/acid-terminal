@@ -50,11 +50,4 @@ Terminal Helper Extension for VS Code
     ]
 }
 ```
-
-## Release Notes
-
-### 0.1.0
-
-Initial release with minimal features
-
 -----------------------------------------------------------------------------------------------------------
