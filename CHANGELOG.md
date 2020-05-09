@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.1.4
+
+* Removed Preview Tag
+* setTerminalsAtStart value for default config set to false 
+
 ### 0.1.3
 
 * Description change

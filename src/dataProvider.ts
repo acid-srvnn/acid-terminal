@@ -11,7 +11,7 @@ export class DataProvider {
         if (this.config.setTerminalsAtStart) {
             vscode.commands.executeCommand("acid-terminal.list.setup");
         }
-    }   
+    }
 
     getConfig() {
         return this.config;
@@ -33,14 +33,14 @@ export class DataProvider {
                     tempjson = this.getDefaultConfig();
                     vscode.window.showInformationMessage('acid-terminal - acid-terminal.conf.file not exists. generating sample file.');
                     fs.writeFile(setting_conf_file, JSON.stringify(tempjson), () => {
-                        
+
                     });
                 } else {
                     let cnf = fs.readFileSync(setting_conf_file, "utf8");
                     tempjson = JSON.parse(cnf);
                 }
-            } 
-        } else if (confType === 'json'){
+            }
+        } else if (confType === 'json') {
             tempjson = conf.conf.json;
             if (conf.conf.json.setTerminalsAtStart === undefined) {
                 tempjson = this.getDefaultConfig();
@@ -73,7 +73,7 @@ export class DataProvider {
     getDefaultConfig() {
         vscode.window.showInformationMessage("acid-terminal - using default config");
         return {
-            setTerminalsAtStart: true,
+            setTerminalsAtStart: false,
             terminalGroups: [
                 {
                     name: "main",
