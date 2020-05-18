@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
-import * as path from 'path';
 import { DataProvider } from './dataProvider';
+import path = require('path');
 
 export class CmdTreeDataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 
@@ -20,41 +19,44 @@ export class CmdTreeDataProvider implements vscode.TreeDataProvider<vscode.TreeI
     getChildren(element?: any): vscode.ProviderResult<any[]> {
         if (!element) {
             let cmdGroups = this.dataProvider.getConfig().cmdGroups;
-            let ret:CmdGroup[] = [];
+            let ret: CmdGroupTreeItem[] = [];
             cmdGroups.forEach(function (cmdGroup) {
-                let cmds: Cmd[] = [];
+                let cmds: CmdTreeItem[] = [];
                 cmdGroup.cmds.forEach(function (cmd) {
-                    cmds.push(new Cmd(cmd.name, cmd.cmd));        
-                })
-                ret.push(new CmdGroup(cmdGroup.name,cmds));
+                    cmds.push(new CmdTreeItem(cmd.name, cmd.cmd, cmd.dontexecute!));
+                });
+                ret.push(new CmdGroupTreeItem(cmdGroup.name, cmds));
             });
             return Promise.resolve(ret);
-        } else {           
+        } else {
             return Promise.resolve(element.cmds);
         }
     }
 }
 
-export class CmdGroup extends vscode.TreeItem{
+export class CmdGroupTreeItem extends vscode.TreeItem {
 
     constructor(
         public readonly label: string,
-        public readonly cmds: Cmd[]
-	) {
-		super(label, vscode.TreeItemCollapsibleState.Collapsed);
+        public readonly cmds: CmdTreeItem[]
+    ) {
+        super(label, vscode.TreeItemCollapsibleState.Expanded);
     }
 
-	contextValue = 'CmdGroup';
+    contextValue = 'CmdGroup';
 }
 
-export class Cmd extends vscode.TreeItem{
+export class CmdTreeItem extends vscode.TreeItem {
 
     constructor(
         public readonly label: string,
-        public readonly cmd: string
-	) {
-		super(label, vscode.TreeItemCollapsibleState.None);
-    }  
+        public readonly cmd: string,
+        public readonly dontexecute: boolean
+    ) {
+        super(label, vscode.TreeItemCollapsibleState.None);
+        this.tooltip = cmd;
+        this.description = cmd;
+    }
 
-	contextValue = 'Cmd';
+    contextValue = 'Cmd';
 }

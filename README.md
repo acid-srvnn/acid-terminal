@@ -24,7 +24,8 @@ Terminal Helper Extension for VS Code
                     "cmds": [
                         {
                             "name": "serverout",
-                            "cmd": "Get-Content -tail 5 -wait serverout.log"
+                            "cmd": "Get-Content -tail 5 -wait serverout.log",
+                            "dontexecute": false
                         }
                     ],
                     "path": ".\\product\\logs\\",
@@ -43,7 +44,8 @@ Terminal Helper Extension for VS Code
                 },
                 {
                     "name": "jar",
-                    "cmd": "ant -f .\\build\\build-local.xml jar"
+                    "cmd": "ant -f .\\build\\build-local.xml jar",
+                    "dontexecute": true
                 }
             ]
         }

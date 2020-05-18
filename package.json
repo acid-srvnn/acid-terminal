@@ -27,10 +27,6 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "acid-terminal.helloWorld",
-				"title": "Hello World"
-			},
-			{
 				"command": "acid-terminal.refreshConf",
 				"title": "Refresh Config",
 				"icon": {
@@ -65,6 +61,14 @@
 					"light": "resources/icons/light/run.svg",
 					"dark": "resources/icons/dark/run.svg"
 				}
+			},
+			{
+				"command": "acid-terminal.openmysettings",
+				"title": "Settings",
+				"icon": {
+					"light": "resources/icons/light/settings.svg",
+					"dark": "resources/icons/dark/settings.svg"
+				}
 			}
 		],
 		"viewsContainers": {
@@ -91,24 +95,34 @@
 		"menus": {
 			"view/title": [
 				{
+					"command": "acid-terminal.openmysettings",
+					"when": "view == acid-terminal-cmd-view",
+					"group": "navigation@1"
+				},
+				{
 					"command": "acid-terminal.refreshConf",
 					"when": "view == acid-terminal-cmd-view",
-					"group": "navigation"
+					"group": "navigation@2"
+				},
+				{
+					"command": "acid-terminal.openmysettings",
+					"when": "view == acid-terminal-list-view",
+					"group": "navigation@1"
 				},
 				{
 					"command": "acid-terminal.refreshConf",
 					"when": "view == acid-terminal-list-view",
-					"group": "navigation"
+					"group": "navigation@2"
 				},
 				{
 					"command": "acid-terminal.list.delete",
 					"when": "view == acid-terminal-list-view",
-					"group": "navigation"
+					"group": "navigation@3"
 				},
 				{
 					"command": "acid-terminal.list.setup",
 					"when": "view == acid-terminal-list-view",
-					"group": "navigation"
+					"group": "navigation@4"
 				}
 			],
 			"view/item/context": [
@@ -124,7 +138,7 @@
 				},
 				{
 					"command": "acid-terminal.list.show",
-					"when": "view == acid-terminal-list-view && viewItem != Cmd",
+					"when": "view == acid-terminal-list-view && viewItem == Terminal",
 					"group": "inline"
 				}
 			]
@@ -180,6 +194,9 @@
 															},
 															"cmd": {
 																"type": "string"
+															},
+															"dontexecute": {
+																"type": "boolean"
 															}
 														}
 													}
@@ -208,6 +225,9 @@
 												},
 												"cmd": {
 													"type": "string"
+												},
+												"dontexecute": {
+													"type": "boolean"
 												}
 											}
 										}

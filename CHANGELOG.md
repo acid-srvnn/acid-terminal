@@ -1,5 +1,12 @@
 # Change Log
 
+### 0.2.1
+
+* Added option 'dontexecute' to commands (Just type the command in the terminal)
+* Tree View expanded by default
+* Minor code organizing
+* Execution Command shown as tooltip and description
+
 ### 0.1.4
 
 * Removed Preview Tag

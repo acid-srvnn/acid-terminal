@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { DataProvider } from './dataProvider';
 import { CmdTreeDataProvider } from './cmdTreeDataProvider';
-import { TerminalTreeDataProvider, Terminal } from './terminalTreeDataProvider';
+import { TerminalTreeDataProvider } from './terminalTreeDataProvider';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -12,10 +12,6 @@ export function activate(context: vscode.ExtensionContext) {
 	vscode.window.registerTreeDataProvider('acid-terminal-list-view', terminalDataProvider);
 	vscode.window.registerTreeDataProvider('acid-terminal-cmd-view', cmdTreeDataProvider);
 
-	let disposable = vscode.commands.registerCommand('acid-terminal.helloWorld', () => {
-		vscode.window.showInformationMessage('acid-terminal - hello');
-	});
-	context.subscriptions.push(disposable);
 
 	let disposable2 = vscode.commands.registerCommand('acid-terminal.refreshConf', () => {
 		dataProvider.refreshConfig();
@@ -30,8 +26,8 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.createTerminal();
 			activeTerminal = vscode.window.activeTerminal;
 		}
-		activeTerminal?.show();
-		activeTerminal?.sendText(args.cmd, true);
+		activeTerminal!.show();
+		activeTerminal!.sendText(args.cmd, !args.dontexecute);
 	});
 	context.subscriptions.push(disposable3);
 
@@ -43,11 +39,11 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposable4);
 
 	let disposable5 = vscode.commands.registerCommand('acid-terminal.list.setup', async (args) => {
-		for (var i = 0; i < dataProvider.getConfig().terminalGroups.length; i++){
+		for (var i = 0; i < dataProvider.getConfig().terminalGroups.length; i++) {
 			let terminalGroup = dataProvider.getConfig().terminalGroups[i];
-			await createTerminalSync(terminalGroup.terminals[0],"workbench.action.terminal.newInActiveWorkspace");			
-			for (var j = 1; j < terminalGroup.terminals.length; j++){				
-				await createTerminalSync(terminalGroup.terminals[j],"workbench.action.terminal.split");
+			await createTerminalSync(terminalGroup.terminals[0], "workbench.action.terminal.newInActiveWorkspace");
+			for (var j = 1; j < terminalGroup.terminals.length; j++) {
+				await createTerminalSync(terminalGroup.terminals[j], "workbench.action.terminal.split");
 			}
 		}
 	});
@@ -72,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.terminals.forEach(async (terminal) => {
 			if (terminal.name === args.terminalName) {
 				terminal.show();
-				terminal.sendText(args.cmd, true);
+				terminal.sendText(args.cmd, !args.dontexecute);
 				status = true;
 			}
 		});
@@ -81,6 +77,11 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 	context.subscriptions.push(disposable7);
+
+	let disposable12 = vscode.commands.registerCommand('acid-terminal.openmysettings', async (args) => {
+		vscode.commands.executeCommand('workbench.action.openSettings', 'acid-terminal');
+	});
+	context.subscriptions.push(disposable12);
 }
 
 async function createTerminalSync(terminal: any, command: string) {
