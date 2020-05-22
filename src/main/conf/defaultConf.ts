@@ -18,9 +18,9 @@ export class DefaultConf {
 
         Conf.logger.log("Getting default config");
 
-        vscode.window.showInformationMessage("acid-terminal - using default config", ...['Setup Now'])
+        vscode.window.showInformationMessage("acid-terminal - using default config", ...['Open Settings'])
             .then(selection => {
-                if (selection === 'Setup Now') {
+                if (selection === 'Open Settings') {
                     vscode.commands.executeCommand('acid-terminal.openmysettings');
                 }
             });

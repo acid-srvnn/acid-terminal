@@ -51,7 +51,7 @@ export class Commands {
                 }
             });
             if (!status) {
-                vscode.window.showInformationMessage('acid-terminal - setup first');
+                TerminalAPI.showMessageToSetup();
             }
         });
         context.subscriptions.push(disposable6);
@@ -66,7 +66,7 @@ export class Commands {
                 }
             });
             if (!status) {
-                vscode.window.showInformationMessage('acid-terminal - setup first');
+                TerminalAPI.showMessageToSetup();
             }
         });
         context.subscriptions.push(disposable7);

@@ -17,4 +17,13 @@ export class TerminalAPI {
         });
     }
 
+    static showMessageToSetup() {
+        vscode.window.showInformationMessage('acid-terminal - setup terminals first', ...['Setup Now'])
+            .then(selection => {
+                if (selection === 'Setup Now') {
+                    vscode.commands.executeCommand('acid-terminal.list.setup');
+                }
+            });
+    }
+
 }
