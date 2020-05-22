@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.2.2
+
+* Code organize
+* Minor fixes
+
 ### 0.2.1
 
 * Added option 'dontexecute' to commands (Just type the command in the terminal)

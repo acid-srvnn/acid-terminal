@@ -1,77 +1,23 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
+import { Config } from '../models/config/config';
+import { TerminalGroup } from '../models/config/terminalGroup';
+import { CmdGroup } from '../models/config/cmdGroup';
+import { Conf } from './conf';
 
-export class DataProvider {
+export class DefaultConf {
 
-    private _config: Config = {
-        setTerminalsAtStart: false,
-        terminalGroups: [],
-        cmdGroups: []
-    };
-
-    constructor() {
-        this.refreshConfig();
-        if (this._config.setTerminalsAtStart) {
-            vscode.commands.executeCommand("acid-terminal.list.setup");
-        }
+    static getEmptyConfig(): Config {
+        return {
+            setTerminalsAtStart: false,
+            terminalGroups: [],
+            cmdGroups: []
+        };
     }
 
-    getConfig() {
-        return this._config;
-    }
+    static getDefaultConfig(): Config {
 
-    refreshConfig() {
-        let conf = vscode.workspace.getConfiguration("acid-terminal");
-        let tempConfig: Config;
-        let confType = conf.conf.type;
+        Conf.logger.log("Getting default config");
 
-        if (confType === 'file') {
-            let setting_conf_file: string | undefined = conf.conf.file;
-
-            if (setting_conf_file === undefined || setting_conf_file === "") {
-                tempConfig = this.getDefaultConfig();
-            } else {
-                if (!fs.existsSync(setting_conf_file)) {
-                    tempConfig = this.getDefaultConfig();
-                    vscode.window.showInformationMessage('acid-terminal - acid-terminal.conf.file not exists. generating sample file.');
-                    fs.writeFile(setting_conf_file, JSON.stringify(tempConfig), () => {
-
-                    });
-                } else {
-                    let cnf = fs.readFileSync(setting_conf_file, "utf8");
-                    tempConfig = JSON.parse(cnf);
-                }
-            }
-        } else {
-            tempConfig = conf.conf.json;
-            if (conf.conf.json.setTerminalsAtStart === undefined) {
-                tempConfig = this.getDefaultConfig();
-            }
-        }
-
-        tempConfig = this.handleMissingProperties(tempConfig);
-        this._config = tempConfig;
-    }
-
-    handleMissingProperties(json: Config): Config {
-        json.terminalGroups.forEach(function (terminalGroup) {
-            terminalGroup.terminals.forEach(function (terminal) {
-                terminal.cmds.forEach(function (cmd) {
-                    cmd.dontexecute = cmd.dontexecute ? cmd.dontexecute : false;
-                });
-                terminal.path = terminal.path ? terminal.path : '.';
-                terminal.cmd = terminal.cmd ? terminal.cmd : '';
-            });
-        });
-        json.cmdGroups.forEach(function (cmdGroup) {
-            cmdGroup.cmds.forEach(function (cmd) {
-                cmd.dontexecute = cmd.dontexecute ? cmd.dontexecute : false;
-            });
-        });
-        return json;
-    }
-
-    getDefaultConfig(): Config {
         vscode.window.showInformationMessage("acid-terminal - using default config", ...['Setup Now'])
             .then(selection => {
                 if (selection === 'Setup Now') {
@@ -198,33 +144,4 @@ export class DataProvider {
             cmdGroups: [cg1, cg2, cg3]
         };
     }
-}
-
-export interface Config {
-    setTerminalsAtStart: boolean;
-    terminalGroups: Array<TerminalGroup>;
-    cmdGroups: Array<CmdGroup>
-}
-
-export interface TerminalGroup {
-    name: string;
-    terminals: Array<Terminal>;
-}
-
-export interface Terminal {
-    name: string;
-    cmds: Array<Cmd>;
-    path?: string;
-    cmd?: string;
-}
-
-export interface CmdGroup {
-    name: string;
-    cmds: Array<Cmd>;
-}
-
-export interface Cmd {
-    name: string;
-    cmd: string;
-    dontexecute?: boolean;
 }

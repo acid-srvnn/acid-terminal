@@ -1,14 +1,10 @@
 import * as vscode from 'vscode';
-import { DataProvider } from './dataProvider';
-import path = require('path');
+import { Conf } from './conf/conf';
+import { TerminalGroupTreeItem } from './models/treeitem/terminalgroup/terminalGroupTreeItem';
+import { TerminalTreeItem } from './models/treeitem/terminalgroup/terminalTreeItem';
+import { CmdTreeItem } from './models/treeitem/terminalgroup/cmdTreeItem';
 
 export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
-
-    dataProvider: DataProvider;
-
-    constructor(param: DataProvider) {
-        this.dataProvider = param;
-    }
 
     public _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined> = new vscode.EventEmitter<vscode.TreeItem | undefined>();
     readonly onDidChangeTreeData: vscode.Event<vscode.TreeItem | undefined> = this._onDidChangeTreeData.event;
@@ -18,7 +14,7 @@ export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.
     }
     getChildren(element?: any): vscode.ProviderResult<any[]> {
         if (!element) {
-            let terminalGroups = this.dataProvider.getConfig().terminalGroups;
+            let terminalGroups = Conf.getConfig().terminalGroups;
             let ret: TerminalGroupTreeItem[] = [];
             terminalGroups.forEach(function (terminalGroup) {
                 let terminals: TerminalTreeItem[] = [];
@@ -40,46 +36,4 @@ export class TerminalTreeDataProvider implements vscode.TreeDataProvider<vscode.
             }
         }
     }
-}
-
-export class TerminalGroupTreeItem extends vscode.TreeItem {
-
-    constructor(
-        public readonly label: string,
-        public readonly terminals: TerminalTreeItem[]
-    ) {
-        super(label, vscode.TreeItemCollapsibleState.Expanded);
-    }
-
-    contextValue = 'TerminalGroup';
-}
-
-export class TerminalTreeItem extends vscode.TreeItem {
-
-    constructor(
-        public readonly label: string,
-        public readonly cmds: CmdTreeItem[],
-        public readonly path: string,
-        public readonly cmd: string
-    ) {
-        super(label, vscode.TreeItemCollapsibleState.Expanded);
-    }
-
-    contextValue = 'Terminal';
-}
-
-export class CmdTreeItem extends vscode.TreeItem {
-
-    constructor(
-        public readonly label: string,
-        public readonly cmd: string,
-        public readonly terminalName: string,
-        public readonly dontexecute: boolean
-    ) {
-        super(label, vscode.TreeItemCollapsibleState.None);
-        this.tooltip = cmd;
-        this.description = cmd;
-    }
-
-    contextValue = 'Cmd';
 }
