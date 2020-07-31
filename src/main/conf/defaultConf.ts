@@ -18,12 +18,12 @@ export class DefaultConf {
 
         Conf.logger.log("Getting default config");
 
-        vscode.window.showInformationMessage("acid-terminal - using default config", ...['Open Settings'])
+        /*vscode.window.showInformationMessage("acid-terminal - using default config", ...['Open Settings'])
             .then(selection => {
                 if (selection === 'Open Settings') {
                     vscode.commands.executeCommand('acid-terminal.openmysettings');
                 }
-            });
+            });*/
 
         let tg1: TerminalGroup = {
             name: "main",

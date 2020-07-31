@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.2.4
+
+* Removed message 'Using default config'
+
 ### 0.2.3
 
 * UI Fixes
