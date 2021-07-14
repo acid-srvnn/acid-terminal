@@ -1,5 +1,10 @@
 # Change Log
 
+
+### 0.2.5
+
+* Bug workaround - Terminal Rename done after a configurable delay
+
 ### 0.2.4
 
 * Removed message 'Using default config'
@@ -23,7 +28,7 @@
 ### 0.1.4
 
 * Removed Preview Tag
-* setTerminalsAtStart value for default config set to false 
+* setTerminalsAtStart value for default config set to false
 
 ### 0.1.3
 
