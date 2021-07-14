@@ -5,4 +5,5 @@ export interface Config {
     setTerminalsAtStart: boolean;
     terminalGroups: Array<TerminalGroup>;
     cmdGroups: Array<CmdGroup>
+    terminalRenameDelay?: number;
 }

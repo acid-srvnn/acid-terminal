@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { CmdTreeDataProvider } from './cmdTreeDataProvider';
+import { Conf } from './conf/conf';
 import { TerminalTreeDataProvider } from './terminalTreeDataProvider';
 
 export class TerminalAPI {
@@ -8,11 +9,16 @@ export class TerminalAPI {
         return new Promise(async resolve => {
             vscode.commands.executeCommand(command);
             let listener = vscode.window.onDidOpenTerminal(async e => {
-                listener.dispose();
-                await vscode.commands.executeCommand('workbench.action.terminal.renameWithArg', { name: terminal.name });
+                listener.dispose();                
                 e.sendText(`cd ${terminal.path}`, true);
                 e.sendText(terminal.cmd, true);
-                resolve();
+                setTimeout(() => 
+                {
+                    e.show();
+                    vscode.commands.executeCommand('workbench.action.terminal.renameWithArg', { name: terminal.name });                    
+                },
+                Conf.getConfig().terminalRenameDelay!);
+                resolve(1);
             });
         });
     }

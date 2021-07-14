@@ -88,6 +88,13 @@ export class Conf {
                 cmd.dontexecute = cmd.dontexecute ? cmd.dontexecute : false;
             });
         });
+
+        if(json.terminalRenameDelay){
+            ret.terminalRenameDelay = json.terminalRenameDelay;
+        }else{
+            ret.terminalRenameDelay = 5000;
+        }
+
         return ret;
     }
 

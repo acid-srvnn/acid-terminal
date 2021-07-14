@@ -32,6 +32,9 @@ export class Commands {
         context.subscriptions.push(disposable4);
 
         let disposable5 = vscode.commands.registerCommand('acid-terminal.list.setup', async (args) => {
+            if(vscode.window.terminals.length === 1){
+                await TerminalAPI.createTerminalSync({name:'dummy',cmd:'',path: '.'}, "workbench.action.terminal.newInActiveWorkspace");
+            }
             for (var i = 0; i < Conf.getConfig().terminalGroups.length; i++) {
                 let terminalGroup = Conf.getConfig().terminalGroups[i];
                 await TerminalAPI.createTerminalSync(terminalGroup.terminals[0], "workbench.action.terminal.newInActiveWorkspace");
