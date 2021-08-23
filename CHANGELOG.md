@@ -1,5 +1,8 @@
 # Change Log
 
+### 0.2.6
+
+* Added right click menu for commands with options to run and copy.
 
 ### 0.2.5
 

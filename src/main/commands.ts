@@ -78,5 +78,9 @@ export class Commands {
             vscode.commands.executeCommand('workbench.action.openSettings', 'acid-terminal');
         });
         context.subscriptions.push(disposable12);
+
+        context.subscriptions.push(vscode.commands.registerCommand('acid-terminal.copycmd', async (args) => {
+            vscode.env.clipboard.writeText(args.cmd);
+        }));
     }
 }

@@ -43,6 +43,10 @@
 				"title": "Run"
 			},
 			{
+				"command": "acid-terminal.copycmd",
+				"title": "Copy"
+			},
+			{
 				"command": "acid-terminal.list.show",
 				"title": "Show"
 			},
@@ -135,6 +139,26 @@
 					"command": "acid-terminal.list.run",
 					"when": "view == acid-terminal-list-view && viewItem == Cmd",
 					"group": "inline"
+				},
+				{
+					"command": "acid-terminal.cmd.run",
+					"when": "view == acid-terminal-cmd-view && viewItem == Cmd",
+					"group": "navigation@1"
+				},
+				{
+					"command": "acid-terminal.list.run",
+					"when": "view == acid-terminal-list-view && viewItem == Cmd",
+					"group": "navigation@1"
+				},
+				{
+					"command": "acid-terminal.copycmd",
+					"when": "view == acid-terminal-cmd-view && viewItem == Cmd",
+					"group": "navigation@2"
+				},
+				{
+					"command": "acid-terminal.copycmd",
+					"when": "view == acid-terminal-list-view && viewItem == Cmd",
+					"group": "navigation@2"
 				},
 				{
 					"command": "acid-terminal.list.show",
