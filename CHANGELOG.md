@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.3.0
+
+* Fix - Use new vscode terminal options - to fix async issues during terminal creation
+
 ### 0.2.6
 
 * Added right click menu for commands with options to run and copy.

@@ -8,8 +8,8 @@ export class Commands {
     static setCommands(context: vscode.ExtensionContext) {
         let disposable2 = vscode.commands.registerCommand('acid-terminal.refreshConf', () => {
             Conf.refreshConfig();
-            ViewProviders.terminalListProvider._onDidChangeTreeData.fire();
-            ViewProviders.cmdListProvider._onDidChangeTreeData.fire();
+            ViewProviders.terminalListProvider._onDidChangeTreeData.fire(undefined);
+            ViewProviders.cmdListProvider._onDidChangeTreeData.fire(undefined);
         });
         context.subscriptions.push(disposable2);
 
@@ -32,14 +32,20 @@ export class Commands {
         context.subscriptions.push(disposable4);
 
         let disposable5 = vscode.commands.registerCommand('acid-terminal.list.setup', async (args) => {
-            if(vscode.window.terminals.length === 1){
-                await TerminalAPI.createTerminalSync({name:'dummy',cmd:'',path: '.'}, "workbench.action.terminal.newInActiveWorkspace");
-            }
             for (var i = 0; i < Conf.getConfig().terminalGroups.length; i++) {
                 let terminalGroup = Conf.getConfig().terminalGroups[i];
-                await TerminalAPI.createTerminalSync(terminalGroup.terminals[0], "workbench.action.terminal.newInActiveWorkspace");
+                let terminalParent = vscode.window.createTerminal({name:terminalGroup.terminals[0].name, cwd:terminalGroup.terminals[0].path});
+                if(i===0){
+                    terminalParent.show();
+                }
+                if(terminalGroup.terminals[0].cmd){
+                    terminalParent.sendText(terminalGroup.terminals[0].cmd);
+                }
                 for (var j = 1; j < terminalGroup.terminals.length; j++) {
-                    await TerminalAPI.createTerminalSync(terminalGroup.terminals[j], "workbench.action.terminal.split");
+                    let terminalsp = vscode.window.createTerminal({name:terminalGroup.terminals[j].name, cwd:terminalGroup.terminals[j].path, location:{parentTerminal:terminalParent}});
+                    if(terminalGroup.terminals[j].cmd){
+                        terminalsp.sendText(terminalGroup.terminals[j].cmd!);
+                    }
                 }
             }
         });

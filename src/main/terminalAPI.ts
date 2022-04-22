@@ -5,7 +5,7 @@ import { TerminalTreeDataProvider } from './terminalTreeDataProvider';
 
 export class TerminalAPI {
 
-    static async createTerminalSync(terminal: any, command: string) {
+    /*static async createTerminalSync(terminal: any, command: string) {
         return new Promise(async resolve => {
             vscode.commands.executeCommand(command);
             let listener = vscode.window.onDidOpenTerminal(async e => {
@@ -21,7 +21,7 @@ export class TerminalAPI {
                 resolve(1);
             });
         });
-    }
+    }*/
 
     static showMessageToSetup() {
         vscode.window.showInformationMessage('acid-terminal - setup terminals first', ...['Setup Now'])
