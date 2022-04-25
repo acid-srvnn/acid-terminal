@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.3.1
+
+* Fix - Allow .. in terminal path
+
 ### 0.3.0
 
 * Fix - Use new vscode terminal options - to fix async issues during terminal creation

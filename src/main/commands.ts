@@ -34,17 +34,23 @@ export class Commands {
         let disposable5 = vscode.commands.registerCommand('acid-terminal.list.setup', async (args) => {
             for (var i = 0; i < Conf.getConfig().terminalGroups.length; i++) {
                 let terminalGroup = Conf.getConfig().terminalGroups[i];
-                let terminalParent = vscode.window.createTerminal({name:terminalGroup.terminals[0].name, cwd:terminalGroup.terminals[0].path});
+                let terminalParent = vscode.window.createTerminal({name:terminalGroup.terminals[0].name});
                 if(i===0){
                     terminalParent.show();
                 }
+                if(terminalGroup.terminals[0].path){
+                    terminalParent.sendText(`cd ${terminalGroup.terminals[0].path}`, true);
+                }
                 if(terminalGroup.terminals[0].cmd){
-                    terminalParent.sendText(terminalGroup.terminals[0].cmd);
+                    terminalParent.sendText(terminalGroup.terminals[0].cmd, true);
                 }
                 for (var j = 1; j < terminalGroup.terminals.length; j++) {
-                    let terminalsp = vscode.window.createTerminal({name:terminalGroup.terminals[j].name, cwd:terminalGroup.terminals[j].path, location:{parentTerminal:terminalParent}});
+                    let terminalsp = vscode.window.createTerminal({name:terminalGroup.terminals[j].name, location:{parentTerminal:terminalParent}});
+                    if(terminalGroup.terminals[j].path){
+                        terminalsp.sendText(`cd ${terminalGroup.terminals[j].path}`, true);
+                    }
                     if(terminalGroup.terminals[j].cmd){
-                        terminalsp.sendText(terminalGroup.terminals[j].cmd!);
+                        terminalsp.sendText(terminalGroup.terminals[j].cmd!, true);
                     }
                 }
             }
